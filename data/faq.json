@@ -1,0 +1,325 @@
+[
+  {
+    "id": "precios",
+    "pregunta": "Precios",
+    "destacada": true,
+    "claves": [
+      "precio",
+      "precios",
+      "costo",
+      "costos",
+      "cuanto cuesta",
+      "cuanto cobra",
+      "cuanto sale",
+      "tarifa",
+      "tarifas",
+      "paquete",
+      "paquetes",
+      "valor de la sesion"
+    ],
+    "respuesta": "Los precios y paquetes están siempre actualizados en la página de precios 💜",
+    "enlace": {
+      "texto": "Ver precios",
+      "href": "https://psicomorfosisgf.com/precios.html"
+    }
+  },
+  {
+    "id": "primera-sesion",
+    "pregunta": "¿Cómo es la primera sesión?",
+    "destacada": true,
+    "claves": [
+      "primera sesion",
+      "primera cita",
+      "primera vez",
+      "como empieza",
+      "como es la sesion",
+      "cuanto dura",
+      "duracion",
+      "que necesito para la sesion"
+    ],
+    "respuesta": "La primera sesión dura 1 hora y 15 minutos, 25 minutos más que una sesión habitual. Sirve para conocernos, resolver tus dudas y definir los primeros objetivos. Solo necesitas un espacio privado y tranquilo, con buena conexión a internet y en el que puedas hablar con libertad."
+  },
+  {
+    "id": "virtual",
+    "pregunta": "¿Las sesiones son virtuales?",
+    "destacada": true,
+    "claves": [
+      "virtual",
+      "virtuales",
+      "online",
+      "en linea",
+      "presencial",
+      "videollamada",
+      "google meet",
+      "meet",
+      "zoom",
+      "efectiva",
+      "efectividad",
+      "funciona la terapia online"
+    ],
+    "respuesta": "Sí, las sesiones son virtuales, por Google Meet. La terapia online es igual de efectiva que la presencial y el trabajo es exactamente el mismo. Mucha gente incluso la prefiere por la comodidad de estar en su propio espacio."
+  },
+  {
+    "id": "confidencialidad",
+    "pregunta": "¿Es confidencial?",
+    "destacada": true,
+    "claves": [
+      "confidencial",
+      "confidencialidad",
+      "privacidad",
+      "privado",
+      "secreto profesional",
+      "reservado",
+      "quien se entera",
+      "se lo cuentas a alguien"
+    ],
+    "respuesta": "Sí, absolutamente. Todo lo que se habla en sesión es estrictamente confidencial. El secreto profesional es uno de los pilares éticos del trabajo de Gaby, así que puedes hablar con total libertad y confianza."
+  },
+  {
+    "id": "agendar",
+    "pregunta": "Quiero agendar",
+    "destacada": true,
+    "claves": [
+      "agendar",
+      "agenda",
+      "reservar",
+      "reserva",
+      "cita",
+      "sacar cita",
+      "pedir cita",
+      "empezar",
+      "iniciar terapia",
+      "contactar",
+      "contacto",
+      "hablar con gaby",
+      "llamada",
+      "disponibilidad",
+      "horario",
+      "horarios"
+    ],
+    "respuesta": "Para agendar o consultar horarios, escríbele a Gaby por WhatsApp. Si prefieres resolver dudas antes de decidir, también puedes pedir una llamada de 15 minutos.",
+    "enlace": {
+      "texto": "Escribir por WhatsApp",
+      "href": "https://wa.me/51989529902"
+    }
+  },
+  {
+    "id": "pago-sin-paquete",
+    "pregunta": "¿Puedo pagar por sesión sin paquete?",
+    "claves": [
+      "sin paquete",
+      "sesion suelta",
+      "sesion individual",
+      "una sola sesion",
+      "solo una sesion",
+      "por sesion",
+      "sin compromiso",
+      "no quiero paquete"
+    ],
+    "respuesta": "Sí. Puedes pagar una sesión individual sin comprometerte a un paquete. Los paquetes son una opción para quienes quieren comprometerse con su proceso y acceder a un precio más accesible por sesión. También puedes agendar una llamada de 15 minutos para resolver dudas antes de decidir."
+  },
+  {
+    "id": "pagos",
+    "pregunta": "¿Cómo se realiza el pago?",
+    "claves": [
+      "pagar",
+      "pago",
+      "pagos",
+      "como pago",
+      "forma de pago",
+      "medios de pago",
+      "yape",
+      "plin",
+      "paypal",
+      "transferencia",
+      "deposito",
+      "cuando se paga"
+    ],
+    "respuesta": "El pago se realiza 24 horas antes de la sesión, como confirmación de asistencia. Los medios disponibles son transferencia interbancaria, Yape, Plin y PayPal."
+  },
+  {
+    "id": "cancelar",
+    "pregunta": "¿Qué pasa si necesito cancelar?",
+    "claves": [
+      "cancelar",
+      "cancelo",
+      "cancelacion",
+      "reprogramar",
+      "reagendar",
+      "cambiar la cita",
+      "cambiar de fecha",
+      "no puedo asistir",
+      "imprevisto",
+      "emergencia",
+      "falte",
+      "faltar",
+      "olvide la sesion"
+    ],
+    "respuesta": "Si surge un imprevisto, avisa con al menos 24 horas de anticipación para cancelar o reprogramar. En caso de emergencias reales (de salud o situaciones urgentes), Gaby reagenda sin problema. Los olvidos o la desorganización personal no se consideran emergencias."
+  },
+  {
+    "id": "pareja",
+    "pregunta": "¿Se hace terapia de pareja?",
+    "claves": [
+      "pareja",
+      "terapia de pareja",
+      "novio",
+      "novia",
+      "esposo",
+      "esposa",
+      "matrimonio",
+      "relacion",
+      "terapia en pareja"
+    ],
+    "respuesta": "Por el momento Gaby se especializa en terapia individual. Si buscas apoyo para tu relación, puede acompañarte en tu proceso personal, lo que muchas veces tiene un impacto positivo en tus vínculos."
+  },
+  {
+    "id": "atiende",
+    "pregunta": "¿A quién atiende?",
+    "claves": [
+      "adolescente",
+      "adolescentes",
+      "menor de edad",
+      "mi hijo",
+      "mi hija",
+      "nino",
+      "ninos",
+      "niña",
+      "edad",
+      "adultos",
+      "a quien atiende",
+      "para quien es"
+    ],
+    "respuesta": "Gaby atiende terapia individual con adultos y adolescentes, en modalidad virtual."
+  },
+  {
+    "id": "psicologo-vs-psicoterapeuta",
+    "pregunta": "¿Psicólogo o psicoterapeuta?",
+    "claves": [
+      "psicologo",
+      "psicoterapeuta",
+      "diferencia",
+      "gestalt",
+      "que es gestalt",
+      "maestria",
+      "formacion",
+      "estudios",
+      "titulo",
+      "especialidad",
+      "enfoque"
+    ],
+    "respuesta": "Un psicólogo tiene formación universitaria en psicología. Un psicoterapeuta, además, tiene formación especializada en una corriente terapéutica; en el caso de Gaby, la Gestalt, con una Maestría en México. Eso significa un acompañamiento terapéutico profundo y estructurado, no solo evaluación u orientación."
+  },
+  {
+    "id": "diagnostico",
+    "pregunta": "¿Necesito un diagnóstico para empezar?",
+    "claves": [
+      "diagnostico",
+      "derivacion",
+      "derivacion medica",
+      "receta",
+      "necesito algo para empezar",
+      "requisitos",
+      "no se que tengo",
+      "no se si necesito terapia",
+      "quien puede ir a terapia"
+    ],
+    "respuesta": "No. No necesitas diagnóstico ni derivación médica. Puedes empezar simplemente porque sientes que algo no está bien, porque atraviesas un momento difícil, quieres conocerte mejor o trabajar en tus sueños y objetivos. Eso es suficiente."
+  },
+  {
+    "id": "pausar",
+    "pregunta": "¿Puedo pausar mi proceso?",
+    "claves": [
+      "pausar",
+      "pausa",
+      "dejar un tiempo",
+      "retomar",
+      "volver despues",
+      "interrumpir",
+      "suspender",
+      "tomar un descanso",
+      "dejar la terapia"
+    ],
+    "respuesta": "Sí. La terapia es tu proceso y va a tu ritmo. Si necesitas pausar por cualquier motivo, lo conversan y hacen un cierre adecuado. Cuando quieras retomarlo, Gaby estará ahí."
+  },
+  {
+    "id": "progreso",
+    "pregunta": "¿Cómo sé si estoy progresando?",
+    "claves": [
+      "progreso",
+      "progresando",
+      "avance",
+      "avanzando",
+      "mejorando",
+      "como se si funciona",
+      "resultados",
+      "cuanto tarda",
+      "cuantas sesiones"
+    ],
+    "respuesta": "El progreso no siempre es lineal ni dramático. A veces se nota en cosas pequeñas: reaccionar distinto ante algo que antes te desbordaba, entenderte un poco más, poner un límite que antes no podías. En sesión revisan periódicamente tus objetivos para que tengas claridad sobre tu proceso."
+  },
+  {
+    "id": "no-conectamos",
+    "pregunta": "¿Y si no conectamos?",
+    "claves": [
+      "no conectamos",
+      "no conectar",
+      "no me gusta",
+      "no hay quimica",
+      "cambiar de terapeuta",
+      "otro terapeuta",
+      "no me siento comodo",
+      "no me siento comoda",
+      "vinculo",
+      "afin"
+    ],
+    "respuesta": "El vínculo terapéutico es fundamental y no siempre se da con cualquier terapeuta, y eso está bien. Si después de las primeras sesiones sientes que no es el espacio adecuado para ti, Gaby te lo dice con honestidad y te ayuda a encontrar a alguien más afín. Tu bienestar es lo primero."
+  },
+  {
+    "id": "necesito-ayuda",
+    "pregunta": "Necesito ayuda",
+    "oculta": true,
+    "claves": [
+      "necesito ayuda",
+      "necesito hablar",
+      "necesito terapia",
+      "necesito un psicologo",
+      "quiero ayuda",
+      "ayudame",
+      "ayuda",
+      "orientacion",
+      "no se por donde empezar",
+      "me siento mal",
+      "estoy mal",
+      "ando mal",
+      "estoy pasando por un momento dificil",
+      "ansiedad",
+      "depresion",
+      "estres",
+      "tristeza",
+      "triste",
+      "angustia"
+    ],
+    "respuesta": "Me alegra que hayas escrito. Dar el primer paso no es fácil 💜 Gaby puede acompañarte, y puedes empezar con una llamada de 15 minutos para conversar sin compromiso. Si quieres, te cuento cómo es la primera sesión o cómo agendar; también puedes escribirle directamente.\n\nSi en este momento te sientes muy mal o en peligro, puedes llamar ahora a la Línea 113, opción 5 (Perú) o a la Línea de la Vida, 800 911 2000 (México).",
+    "enlace": {
+      "texto": "Escribir por WhatsApp",
+      "href": "https://wa.me/51989529902"
+    }
+  },
+  {
+    "id": "saludo",
+    "pregunta": "Hola",
+    "oculta": true,
+    "claves": [
+      "hola",
+      "holi",
+      "buenas",
+      "buenos dias",
+      "buenas tardes",
+      "buenas noches",
+      "hey",
+      "que tal"
+    ],
+    "respuesta": "¡Hola! 🐰 Soy la conejita de Psicomorfosis. Puedo contarte sobre las sesiones, los pagos, la confidencialidad y más. Elige una opción o escríbeme tu duda."
+  }
+]

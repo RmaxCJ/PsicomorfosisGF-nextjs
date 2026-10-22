@@ -13,11 +13,11 @@ export default function CintaAnimada() {
         {[...Array(4)].map((_, i) => (
           <span key={i} className="flex items-center space-x-8">
             <span>Terapia Gestalt Centrada en el Presente</span>
-            <span>✦</span>
+            <span>❤️</span>
             <span>Atención Virtual Especializada</span>
-            <span>✦</span>
+            <span>✨</span>
             <span>Espacio Seguro y Empático</span>
-            <span>✦</span>
+            <span>🏵️</span>
           </span>
         ))}
       </motion.div>

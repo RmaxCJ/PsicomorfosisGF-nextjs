@@ -7,7 +7,8 @@ import Metodologia from "@/components/Metodologia";
 import Footer from "@/components/Footer";
 import Portada from "@/components/Portada";
 import OndasFestoneadas from "@/components/OndasFestoneadas";
-
+import QuienSoy from "@/components/QuienSoy";
+import Dudas from "@/components/Dudas";
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -18,6 +19,8 @@ export default function Home() {
 
       <Presentacion />
       <Metodologia />
+      <QuienSoy />
+      <Dudas />
       <CintaAnimada />
 
       <Footer />

@@ -2,22 +2,102 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import CintaAnimada from "@/components/CintaAnimada";
 import Footer from "@/components/Footer";
 import Portada from "@/components/Portada";
 import DivisorOndas from "@/components/DivisorOndas";
 
+type Region = "LATAM" | "INTL";
+
+// Países que se consideran Latinoamérica (códigos ISO)
+const LATAM = new Set([
+  "AR",
+  "BO",
+  "BR",
+  "CL",
+  "CO",
+  "CR",
+  "CU",
+  "DO",
+  "EC",
+  "SV",
+  "GT",
+  "HN",
+  "MX",
+  "NI",
+  "PA",
+  "PY",
+  "PE",
+  "PR",
+  "UY",
+  "VE",
+]);
+
+const PRECIOS = {
+  LATAM: { online: "S/. 180", presencial: "S/. 210" },
+  INTL: { online: "S/. 280" },
+};
+
 export default function InversionPage() {
   const numTelefono = "51989529902";
+  const [region, setRegion] = useState<Region>("LATAM");
+  const [listo, setListo] = useState(false);
 
+  useEffect(() => {
+    // CAPA 1: Intentamos con una API limpia (GeoJS) que rara vez está en listas negras
+    fetch("https://get.geojs.io/v1/ip/country.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const pais = data.country;
+        if (pais && !LATAM.has(pais)) {
+          setRegion("INTL");
+        }
+      })
+      .catch((error) => {
+        console.warn(
+          "API de IP bloqueada, usando zona horaria de respaldo...",
+          error,
+        );
+
+        // CAPA 2: RESPALDO A PRUEBA DE BALAS (Imposible de bloquear por Edge/VPN)
+        // Lee la zona horaria configurada en la computadora o celular del usuario
+        try {
+          const zonaHoraria =
+            Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+
+          // Si no empieza con "America/" (ej. Europe/Madrid, Asia/Tokyo)
+          // o si es una zona de USA/Canadá, es paciente Internacional
+          const esOtroContinente = !zonaHoraria.startsWith("America/");
+          const esNorteAmerica = [
+            "New_York",
+            "Chicago",
+            "Denver",
+            "Los_Angeles",
+            "Toronto",
+            "Vancouver",
+            "Montreal",
+            "Phoenix",
+            "Detroit",
+          ].some((ciudad) => zonaHoraria.includes(ciudad));
+
+          if (esOtroContinente || esNorteAmerica) {
+            setRegion("INTL");
+          }
+        } catch (e) {
+          // Si todo falla absurdamente, se queda en LATAM por seguridad
+        }
+      })
+      .finally(() => setListo(true));
+  }, []);
   // Arreglo de Sesiones Puntuales (Arriba)
   const sesiones = [
     {
       titulo: "Sesión Individual Online",
       modalidad: "Google Meet o Zoom",
       tiempo: "50 minutos",
-      precio: "S/. 140",
+      precio: region === "INTL" ? PRECIOS.INTL.online : PRECIOS.LATAM.online,
       mensajeWa:
         "Hola Gabi, vengo de la web y me gustaría agendar una Sesión Individual Online.",
       bgColor: "bg-[#eae2f8]", // Lavender
@@ -28,7 +108,8 @@ export default function InversionPage() {
       titulo: "Sesión Individual Presencial",
       modalidad: "Consultorio en Chorrillos",
       tiempo: "50 minutos",
-      precio: "S/. 160",
+      precio: PRECIOS.LATAM.presencial,
+      soloLatam: true,
       mensajeWa:
         "Hola Gabi, vengo de la web y me gustaría agendar una Sesión Individual Presencial.",
       bgColor: "bg-[#e3f0ee]", // Teal light
@@ -37,7 +118,7 @@ export default function InversionPage() {
     },
   ];
 
-  // Arreglo de Paquetes Terapéuticos (Abajo)
+  // Arreglo de Paquetes Terapéuticos (Abajo) con precios proporcionales
   const paquetes = [
     {
       badgeText: "1 MES · 4 SESIONES",
@@ -48,7 +129,8 @@ export default function InversionPage() {
       tagline: "Conócete ♡",
       taglineColor: "text-[#7e69ad]",
       desc: "Empieza aquí si esta será tu primera experiencia en terapia.",
-      precio: "S/. 520",
+      precioLatam: "S/. 760",
+      precioIntl: "S/. 1,180",
       priceColor: "text-[#7e69ad]",
       checkColor: "text-[#9b87c9]",
       mensajeWa:
@@ -65,7 +147,8 @@ export default function InversionPage() {
       tagline: "Suelta ♡",
       taglineColor: "text-[#6cada3]",
       desc: "Para quienes quieren ir más allá de entender lo que sienten.",
-      precio: "S/. 980",
+      precioLatam: "S/. 1,470",
+      precioIntl: "S/. 2,280",
       priceColor: "text-[#6cada3]",
       checkColor: "text-[#6cada3]",
       mensajeWa:
@@ -86,7 +169,8 @@ export default function InversionPage() {
       tagline: "Resignifica ♡",
       taglineColor: "text-[#f88f1f]",
       desc: "Comprendes con mayor profundidad tu historia y le das un nuevo significado.",
-      precio: "S/. 1,410",
+      precioLatam: "S/. 2,160",
+      precioIntl: "S/. 3,360",
       priceColor: "text-[#f88f1f]",
       checkColor: "text-[#f88f1f]",
       mensajeWa:
@@ -107,7 +191,8 @@ export default function InversionPage() {
       tagline: "Transfórmate ♡",
       taglineColor: "text-[#6cada3]",
       desc: "Lo aprendido empieza a integrarse en tu día a día y el cambio se vuelve tu nueva forma de vivir.",
-      precio: "S/. 1,800",
+      precioLatam: "S/. 2,820",
+      precioIntl: "S/. 4,380",
       priceColor: "text-[#6cada3]",
       checkColor: "text-[#6cada3]",
       mensajeWa:
@@ -127,8 +212,9 @@ export default function InversionPage() {
       titulo: "Construyendo la Vida que Quiero",
       tagline: "Renace ♡",
       taglineColor: "text-[#7e69ad]",
-      desc: "Un proceso profundo para consolidar cambios y vivir con más libertad, conciencia y coherencia contigo.",
-      precio: "S/. 2,600",
+      desc: "Un proceso profundo para consolidar cambios y vivir con más libertad, conciencia y coherencia.",
+      precioLatam: "S/. 4,080",
+      precioIntl: "S/. 6,340",
       priceColor: "text-[#7e69ad]",
       checkColor: "text-[#9b87c9]",
       mensajeWa:
@@ -164,6 +250,32 @@ export default function InversionPage() {
           </p>
         </div>
 
+        {/* Indicador Automático de Región (Oculta los botones manuales) */}
+        {listo && (
+          <div className="mb-10">
+            <div className="inline-flex items-center gap-2 mb-3 text-sm text-[#0c3f40] bg-white/60 px-5 py-2.5 rounded-full shadow-sm border border-[#e2d5c8]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#6cada3] animate-pulse"></span>
+              <span>
+                Mostrando precios para{" "}
+                <strong className="font-bold">
+                  {region === "LATAM" ? "Latinoamérica" : "otros países"}
+                </strong>
+                {/* OPCIÓN QUE ME DISTE ANTES:
+                Mostrando tarifas automáticas para tu región:{" "}
+                <strong className="font-bold">
+                  {region === "LATAM" ? "Latinoamérica" : "Internacional"}
+                </strong> 
+                */}
+              </span>
+            </div>
+
+            <p className="text-[13px] text-[#777] max-w-[560px]">
+              Los honorarios se ajustan según la moneda y el costo de vida de
+              cada región, para que la terapia sea accesible en todas partes.
+            </p>
+          </div>
+        )}
+
         {/* Sección 1: Sesiones Puntuales */}
         <div className="flex items-center gap-2.5 font-semibold text-[#333] mb-6">
           <span className="w-[34px] h-[34px] rounded-full bg-[#eae2f8] text-[#7e69ad] flex items-center justify-center shrink-0">
@@ -173,58 +285,60 @@ export default function InversionPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 items-stretch">
-          {sesiones.map((sesion, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className={`${sesion.bgColor} rounded-[18px] p-[30px] flex flex-col`}
-            >
-              <div className="w-[130px] h-[130px] rounded-full bg-white/60 flex items-center justify-center mb-[18px] overflow-hidden">
-                <Image
-                  src={sesion.img}
-                  alt={sesion.titulo}
-                  width={100}
-                  height={100}
-                  className="object-cover"
-                />
-              </div>
-              <h5 className="font-bold text-lg mb-1.5 text-[#0c3f40]">
-                {sesion.titulo}
-              </h5>
-              <p className="text-[#555] text-sm mb-1">{sesion.modalidad}</p>
-              <p className="text-[#555] text-sm mb-1 flex items-center gap-1.5">
-                <svg
-                  className="w-4 h-4 opacity-70"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          {sesiones
+            .filter((s) => region === "LATAM" || !s.soloLatam)
+            .map((sesion, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={`${sesion.bgColor} rounded-[18px] p-[30px] flex flex-col`}
+              >
+                <div className="w-[130px] h-[130px] rounded-full bg-white/60 flex items-center justify-center mb-[18px] overflow-hidden">
+                  <Image
+                    src={sesion.img}
+                    alt={sesion.titulo}
+                    width={100}
+                    height={100}
+                    className="object-cover"
                   />
-                </svg>
-                {sesion.tiempo}
-              </p>
-              <div
-                className={`text-[28px] font-bold my-3.5 ${sesion.textColor}`}
-              >
-                {sesion.precio}
-              </div>
-              <a
-                href={`https://wa.me/${numTelefono}?text=${encodeURIComponent(sesion.mensajeWa)}`}
-                target="_blank"
-                rel="noreferrer"
-                className={`mt-auto inline-block text-center rounded-[30px] py-2.5 px-6 font-semibold text-white transition-opacity hover:opacity-90 ${sesion.textColor.replace("text-", "bg-")}`}
-              >
-                Agendar sesión
-              </a>
-            </motion.div>
-          ))}
+                </div>
+                <h5 className="font-bold text-lg mb-1.5 text-[#0c3f40]">
+                  {sesion.titulo}
+                </h5>
+                <p className="text-[#555] text-sm mb-1">{sesion.modalidad}</p>
+                <p className="text-[#555] text-sm mb-1 flex items-center gap-1.5">
+                  <svg
+                    className="w-4 h-4 opacity-70"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  {sesion.tiempo}
+                </p>
+                <div
+                  className={`text-[28px] font-bold my-3.5 ${sesion.textColor}`}
+                >
+                  {sesion.precio}
+                </div>
+                <a
+                  href={`https://wa.me/${numTelefono}?text=${encodeURIComponent(sesion.mensajeWa)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`mt-auto inline-block text-center rounded-[30px] py-2.5 px-6 font-semibold text-white transition-opacity hover:opacity-90 ${sesion.textColor.replace("text-", "bg-")}`}
+                >
+                  Agendar sesión
+                </a>
+              </motion.div>
+            ))}
 
           {/* Tarjeta Informativa Lateral */}
           <div className="lg:border-l border-[#ddd] lg:pl-[30px] flex items-center">
@@ -240,7 +354,7 @@ export default function InversionPage() {
 
         <hr className="border-[#ddd] my-12" />
 
-        {/* Sección 2: Procesos Terapéuticos (Paquetes) */}
+        {/* Sección 2: Procesos Terapéuticos (Paquetes) - Visibles para TODOS */}
         <div className="flex items-center gap-2.5 font-semibold text-[#333] mb-2">
           <span className="w-[34px] h-[34px] rounded-full bg-[#eae2f8] text-[#7e69ad] flex items-center justify-center shrink-0">
             🌱
@@ -316,7 +430,7 @@ export default function InversionPage() {
               <div
                 className={`text-[24px] font-bold mb-[18px] ${paquete.priceColor}`}
               >
-                {paquete.precio}
+                {region === "LATAM" ? paquete.precioLatam : paquete.precioIntl}
               </div>
 
               <a
@@ -332,7 +446,7 @@ export default function InversionPage() {
         </div>
 
         {/* Barra de Características Inferior */}
-        <div className="bg-[#f8ede5] rounded-[18px] p-[30px_20px] mb-12">
+        <div className="bg-[#f8ede5] rounded-[18px] p-[30px_20px] mb-12 border border-[#e2d5c8]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex items-center gap-3.5">
               <span className="w-[46px] h-[46px] rounded-full bg-[#6cada3] text-white flex items-center justify-center shrink-0">
@@ -402,120 +516,178 @@ export default function InversionPage() {
         </div>
       </section>
 
-      {/* Sección Métodos de Pago */}
-      <section className="bg-[#cec6db] py-20 px-4 md:px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#0c3f40] mb-3">
-              Métodos de Pago
+      {/* Sección Formas de Pago - Diseño Idéntico a la Imagen 1 */}
+      <section className="bg-[#6cada3] py-20 px-4 md:px-6 mt-16 w-full">
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          {/* TÍTULO CON ONDAS SENOIDALES LARGAS Y DE MAYOR FRECUENCIA */}
+          <div className="flex items-center justify-center gap-4 md:gap-6 mb-16 w-full">
+            {/* Onda izquierda (Más larga y alta frecuencia) */}
+            <svg
+              width="280"
+              height="20"
+              viewBox="0 0 280 20"
+              fill="none"
+              className="stroke-[#f8ede5] hidden md:block"
+            >
+              <path
+                d="M 0 10 Q 7 2, 14 10 T 28 10 T 42 10 T 56 10 T 70 10 T 84 10 T 98 10 T 112 10 T 126 10 T 140 10 T 154 10 T 168 10 T 182 10 T 196 10 T 210 10 T 224 10 T 238 10 T 252 10 T 266 10 T 280 10"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="transparent"
+              />
+            </svg>
+
+            <h2
+              className="text-3xl md:text-5xl text-[#f8ede5] tracking-widest text-center px-2 shrink-0"
+              style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
+            >
+              FORMAS DE PAGO
             </h2>
-            <p className="text-[#555] text-[15px]">
-              El pago se realiza <strong>24 horas antes</strong> de la sesión
-              como confirmación de asistencia.
-            </p>
+
+            {/* Onda derecha (Más larga y alta frecuencia) */}
+            <svg
+              width="280"
+              height="20"
+              viewBox="0 0 280 20"
+              fill="none"
+              className="stroke-[#f8ede5] hidden md:block"
+            >
+              <path
+                d="M 0 10 Q 7 2, 14 10 T 28 10 T 42 10 T 56 10 T 70 10 T 84 10 T 98 10 T 112 10 T 126 10 T 140 10 T 154 10 T 168 10 T 182 10 T 196 10 T 210 10 T 224 10 T 238 10 T 252 10 T 266 10 T 280 10"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="transparent"
+              />
+            </svg>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Perú */}
-            <div className="bg-white rounded-[20px] p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-t-[5px] border-t-[#f88f1f] flex flex-col items-center">
-              <Image
-                src="/img/banderaPeru.png"
-                alt="Perú"
-                width={80}
-                height={50}
-                className="rounded-md mb-6"
-              />
-              <h5 className="font-bold text-xl text-[#0c3f40] mb-6">Perú</h5>
-              <div className="flex flex-col gap-3 mb-8 w-full text-left pl-8">
-                <span className="flex items-center gap-3 font-medium text-[#555]">
+          {/* CONTENEDOR DE LOS 3 MÉTODOS */}
+          <div className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-20">
+            {/* 1. PERÚ */}
+            <div className="flex flex-col items-center">
+              <div className="relative w-36 h-36 flex items-center justify-center">
+                {/* Fondo Galleta (Aprobada) */}
+                <svg
+                  viewBox="0 0 200 200"
+                  className="absolute inset-0 w-full h-full text-[#f8ede5] fill-current drop-shadow-sm"
+                >
+                  <path d="M100,15 C115,0 135,10 140,25 C160,20 175,35 170,55 C190,65 190,85 175,100 C190,115 190,135 170,145 C175,165 160,180 140,175 C135,190 115,200 100,185 C85,200 65,190 60,175 C40,180 25,165 30,145 C10,135 10,115 25,100 C10,85 10,65 30,55 C25,35 40,20 60,25 C65,10 85,0 100,15 Z" />
+                </svg>
+
+                <div className="relative z-10 w-24 h-24">
                   <Image
-                    src="/img/plin_icono.webp"
+                    src="/img/plinLogo.png"
                     alt="Plin"
-                    width={24}
-                    height={24}
-                  />{" "}
-                  Plin
-                </span>
-                <span className="flex items-center gap-3 font-medium text-[#555]">
-                  <span className="text-[#6cada3] font-bold text-xl w-6 text-center">
-                    🏦
-                  </span>{" "}
-                  CCI
-                </span>
+                    fill
+                    className="object-contain drop-shadow-sm"
+                  />
+                </div>
+
+                <div className="absolute -bottom-2 -right-4 w-12 h-12 bg-[#e6dced] rounded-full p-1.5 flex items-center justify-center z-20 shadow-md">
+                  <div className="w-full h-full rounded-full overflow-hidden border border-black/10">
+                    <Image
+                      src="/img/banderaPeru.png"
+                      alt="Perú"
+                      width={40}
+                      height={40}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
               </div>
-              <a
-                href={`https://wa.me/${numTelefono}?text=Hola%20Gabi,%20quiero%20agendar%20desde%20Perú`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-auto bg-[#f88f1f] text-white rounded-full py-2 px-8 font-semibold hover:bg-[#e07d12] transition-colors"
+
+              <p
+                className="mt-5 text-[#0c3f40] text-xl leading-tight text-center"
+                style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
               >
-                Agendar →
-              </a>
+                Perú
+              </p>
             </div>
 
-            {/* México */}
-            <div className="bg-white rounded-[20px] p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-t-[5px] border-t-[#6cada3] flex flex-col items-center">
-              <Image
-                src="/img/banderaMexico.png"
-                alt="México"
-                width={80}
-                height={50}
-                className="rounded-md mb-6"
-              />
-              <h5 className="font-bold text-xl text-[#0c3f40] mb-6">México</h5>
-              <div className="flex flex-col gap-3 mb-8 w-full text-left pl-8">
-                <span className="flex items-center gap-3 font-medium text-[#555]">
-                  <span className="text-[#6cada3] font-bold text-xl w-6 text-center">
-                    🏦
-                  </span>{" "}
-                  SPEI
-                </span>
-              </div>
-              <a
-                href={`https://wa.me/${numTelefono}?text=Hola%20Gabi,%20quiero%20agendar%20desde%20México`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-auto bg-[#6cada3] text-white rounded-full py-2 px-8 font-semibold hover:bg-[#589990] transition-colors"
-              >
-                Agendar →
-              </a>
-            </div>
+            {/* 2. INTERNACIONAL */}
+            <div className="flex flex-col items-center">
+              <div className="relative w-36 h-36 flex items-center justify-center">
+                <svg
+                  viewBox="0 0 200 200"
+                  className="absolute inset-0 w-full h-full text-[#f8ede5] fill-current drop-shadow-sm"
+                >
+                  <path d="M100,15 C115,0 135,10 140,25 C160,20 175,35 170,55 C190,65 190,85 175,100 C190,115 190,135 170,145 C175,165 160,180 140,175 C135,190 115,200 100,185 C85,200 65,190 60,175 C40,180 25,165 30,145 C10,135 10,115 25,100 C10,85 10,65 30,55 C25,35 40,20 60,25 C65,10 85,0 100,15 Z" />
+                </svg>
 
-            {/* Otros Países */}
-            <div className="bg-white rounded-[20px] p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-t-[5px] border-t-[#f88f1f] flex flex-col items-center">
-              <Image
-                src="/img/mundoIcon.webp"
-                alt="Otros países"
-                width={80}
-                height={80}
-                className="mb-4"
-              />
-              <h5 className="font-bold text-xl text-[#0c3f40] mb-6">
-                Otros países
-              </h5>
-              <div className="flex flex-col gap-3 mb-8 w-full text-left pl-8">
-                <span className="flex items-center gap-3 font-medium text-[#555]">
-                  <img
-                    src="https://www.paypalobjects.com/webstatic/icon/favicon.ico"
+                <div className="relative z-10 w-24 h-24 mt-2">
+                  <Image
+                    src="/img/paypal.png"
                     alt="PayPal"
-                    className="w-6 h-6"
-                  />{" "}
-                  PayPal
-                </span>
+                    fill
+                    className="object-contain drop-shadow-sm"
+                  />
+                </div>
+
+                <div className="absolute -bottom-2 -right-4 w-12 h-12 bg-[#e6dced] rounded-full p-1.5 flex items-center justify-center z-20 shadow-md">
+                  <div className="w-full h-full rounded-full overflow-hidden border border-black/10">
+                    <Image
+                      src="/img/globoTierra.png"
+                      alt="Internacional"
+                      width={40}
+                      height={40}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
               </div>
-              <a
-                href={`https://wa.me/${numTelefono}?text=Hola%20Gabi,%20quiero%20agendar%20desde%20el%20extranjero`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-auto bg-[#f88f1f] text-white rounded-full py-2 px-8 font-semibold hover:bg-[#e07d12] transition-colors"
+
+              <p
+                className="mt-5 text-[#0c3f40] text-xl leading-tight text-center"
+                style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
               >
-                Agendar →
-              </a>
+                Internacional
+              </p>
+            </div>
+
+            {/* 3. MÉXICO */}
+            <div className="flex flex-col items-center">
+              <div className="relative w-36 h-36 flex items-center justify-center">
+                <svg
+                  viewBox="0 0 200 200"
+                  className="absolute inset-0 w-full h-full text-[#f8ede5] fill-current drop-shadow-sm"
+                >
+                  <path d="M100,15 C115,0 135,10 140,25 C160,20 175,35 170,55 C190,65 190,85 175,100 C190,115 190,135 170,145 C175,165 160,180 140,175 C135,190 115,200 100,185 C85,200 65,190 60,175 C40,180 25,165 30,145 C10,135 10,115 25,100 C10,85 10,65 30,55 C25,35 40,20 60,25 C65,10 85,0 100,15 Z" />
+                </svg>
+
+                <div className="relative z-10 w-24 h-24">
+                  <Image
+                    src="/img/bancoAzteca.png"
+                    alt="México"
+                    fill
+                    className="object-contain drop-shadow-sm"
+                  />
+                </div>
+
+                <div className="absolute -bottom-2 -right-4 w-12 h-12 bg-[#e6dced] rounded-full p-1.5 flex items-center justify-center z-20 shadow-md">
+                  <div className="w-full h-full rounded-full overflow-hidden border border-black/10">
+                    <Image
+                      src="/img/banderaMexico.png"
+                      alt="México"
+                      width={40}
+                      height={40}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <p
+                className="mt-5 text-[#0c3f40] text-xl leading-tight text-center"
+                style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
+              >
+                México
+              </p>
             </div>
           </div>
         </div>
       </section>
-
       <CintaAnimada />
       <Footer />
     </main>

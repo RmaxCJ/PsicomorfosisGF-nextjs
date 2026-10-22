@@ -23,11 +23,11 @@ const WHATSAPP =
 // Para agregar más páginas, súmalas a cualquiera de las dos listas
 const linksIzquierda = [
   { name: "La Terapia", href: "/" },
-  { name: "Quién Soy", href: "quiensoy" },
+  { name: "Quién Soy", href: "/quiensoy" },
 ];
 const linksDerecha = [
+  { name: "Acuerdos", href: "/acuerdos" },
   { name: "Inversión", href: "/inversion" },
-  { name: "Tienda", href: "#" },
 ];
 const todosLosLinks = [...linksIzquierda, ...linksDerecha];
 
