@@ -9,6 +9,8 @@ import Portada from "@/components/Portada";
 import OndasFestoneadas from "@/components/OndasFestoneadas";
 import ValoresProfesionales from "@/components/ValoresProfesionales";
 import TiendaSeccion from "@/components/TiendaSeccion";
+import Dudas from "@/components/Dudas";
+import Testimonios from "@/components/Testimonios";
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -17,6 +19,8 @@ export default function Home() {
       <Portada imagen="/img/Portadas/Portada_LaTerapia.png" alt="La Terapia" />
       <DivisorOndas color="text-[#f0e4da]" bgColor="bg-[#6cada3]" />
       <ValoresProfesionales />
+      <Testimonios />
+      <Dudas />
       <CintaAnimada />
 
       <Footer />

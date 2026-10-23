@@ -1,80 +1,107 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
+// Adaptamos los colores y la estructura para que luzcan idénticos a los "sticky notes" de tu referencia visual.
 const valores = [
   {
     titulo: "Honestidad",
     texto:
       "Comunicarnos de manera honesta nos permite disfrutar de un acompañamiento sincero para lograr un proceso transparente de crecimiento y transformación.",
-    img: "/img/Acuerdos/honestidad.webp",
-    bgColor: "bg-[#ede6f5]",
+    bgColor: "bg-[#ebdce3]", // Rosa pastel (Discovery)
+    textColor: "text-[#333333]",
+    rotate: "-rotate-2",
+    translate: "md:translate-y-4",
+    colSpan: "",
   },
   {
     titulo: "Responsabilidad",
     texto:
       "Trabajamos con la esencia del ser. Ser responsables es indispensable, dando prioridad al cuidado del bienestar emocional y la salud mental.",
-    img: "/img/Acuerdos/responsabilidad.webp",
-    bgColor: "bg-[#f8ede5]",
+    bgColor: "bg-[#dbe6f0]", // Azul pastel (Direction)
+    textColor: "text-[#333333]",
+    rotate: "rotate-1",
+    translate: "md:-translate-y-2",
+    colSpan: "",
   },
   {
     titulo: "Respeto",
     texto:
       "Cada experiencia que es compartida en el ambiente terapéutico debe ser valorada, tratada con cuidado como al ser único al que pertenece.",
-    img: "/img/Acuerdos/respeto.webp",
-    bgColor: "bg-white",
+    bgColor: "bg-[#e3dcb8]", // Beige/Caqui (Creation)
+    textColor: "text-[#333333]",
+    rotate: "rotate-2",
+    translate: "md:translate-y-6",
+    colSpan: "",
   },
   {
     titulo: "Amor",
     texto:
       "Es lo que me recuerda la misión del terapeuta; un vínculo de afecto y familiaridad con mis pacientes para compartir un proceso de sanación.",
-    img: "/img/Acuerdos/amor.webp",
-    bgColor: "bg-[#e8f3f1]",
+    bgColor: "bg-[#915872]", // Morado oscuro (Launch)
+    textColor: "text-white",
+    rotate: "-rotate-1",
+    translate: "md:-translate-y-12",
+    colSpan: "md:col-start-2 z-10", // Lo centramos en la segunda fila superponiéndolo
   },
 ];
 
 export default function ValoresProfesionales() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-white w-full">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="text-[#f88f1f] font-bold text-sm uppercase tracking-wider">
-            Mi Filosofía
-          </span>
-          <h2 className="text-3xl md:text-5xl font-black text-[#0c3f40] mt-2">
+    <section className="py-24 px-4 md:px-8 bg-[#fdfbf9] w-full overflow-hidden">
+      <div className="max-w-5xl mx-auto">
+        {/* Título con animación ligada al scroll */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-20 md:mb-24"
+        >
+          <h2 className="text-4xl md:text-5xl font-black text-[#0c3f40] tracking-tight">
             Valores Profesionales
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 mt-12">
+        {/* Cuadrícula estilo Masonry/Sticky Notes */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 place-items-center md:place-items-stretch">
           {valores.map((valor, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
               key={valor.titulo}
-              className={`${valor.bgColor} rounded-[40px] p-8 md:p-10 relative shadow-sm border border-black/5 flex flex-col items-center text-center mt-12 md:mt-10`}
+              // 1. Configuración de animación vertical
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              // 2. EL SECRETO: once: false hace que desaparezcan al subir y aparezcan al bajar
+              viewport={{ once: false, margin: "0px 0px -100px 0px" }}
+              transition={{
+                duration: 0.7,
+                ease: "easeOut",
+                delay: index * 0.15, // Efecto cascada
+              }}
+              // Clases para posicionar la nota en la cuadrícula
+              className={`w-full max-w-sm mx-auto ${valor.colSpan} ${valor.translate}`}
             >
-              {/* Imagen circular flotando arriba de la tarjeta */}
-              <div className="absolute -top-14 w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-md bg-white">
-                <Image
-                  src={valor.img}
-                  alt={valor.titulo}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 112px, 128px"
-                />
-              </div>
+              {/* Contenedor visual de la "Nota Adhesiva" */}
+              <div
+                className={`${valor.bgColor} ${valor.textColor} h-full p-8 md:p-10 shadow-[0_15px_35px_rgba(0,0,0,0.1)] ${valor.rotate} transition-transform hover:scale-105 duration-300 relative`}
+              >
+                {/* Borde punteado interior característico del diseño de referencia */}
+                <div className="absolute inset-1 border-[1.5px] border-dashed border-black/15 pointer-events-none"></div>
 
-              {/* Contenido */}
-              <h3 className="text-2xl font-black text-[#0c3f40] mt-12 md:mt-16 mb-4">
-                {valor.titulo}
-              </h3>
-              <p className="text-[#555555] text-base leading-relaxed font-medium">
-                {valor.texto}
-              </p>
+                {/* Usamos font-serif para igualar la tipografía de los títulos en la imagen 4 */}
+                <h3 className="text-[26px] md:text-3xl font-serif mb-4 relative z-10">
+                  {valor.titulo}
+                </h3>
+                <p
+                  className={`text-[15px] md:text-base leading-relaxed relative z-10 ${
+                    valor.textColor === "text-white"
+                      ? "opacity-90"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {valor.texto}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
